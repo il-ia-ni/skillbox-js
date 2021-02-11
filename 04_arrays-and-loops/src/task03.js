@@ -1,26 +1,23 @@
-// Движение танка по массиву boolean-mean с уничтожением танка и прекращением движения после наезда на 2 мины
+// v2 Задание 3 - Движение танка по массиву boolean-мин с уничтожением танка и прекращением движения после наезда на 2 мины
 
-let roadMines = [true, false, true, true, true, true, true, false, true, false];
+let roadMines = [false, true, true, false, true, true, true, true, true, true];
+let tankPosition = 0;
 
-let tankPosition;
+let livesCounter = 3;
 
-for (tankPosition = 0; tankPosition < roadMines.length; tankPosition++) {
-    let eachStep = true; // для движения по циклу ищем незаминированные поля
-    if (eachStep === roadMines[tankPosition]) { // условие выполняется 1 до конца цикла for, если на пути танка нет мин
-        console.log(`танк переместился на ${tankPosition + 1}`);
-    } else if (eachStep !== roadMines[tankPosition]) { // альтернативное условие 2 выполняется при встрече первой мины и открывает внутренний цикл while поиска второй мины
-        console.log(`танк переместился на ${tankPosition + 1}. Танк повреждён`);
-        eachStep = false; // для прекращения всего цикла ищем поле со вторуой миной
-        tankPosition++; // т.к. в цикл for больше не возвращаемся, после первой мины переходим на следущий шаг перед открытием вн. цикла while
-        while (tankPosition < roadMines.length) { // вн.цикл выполняется, пока не дойдем до края массива
-            if (eachStep !== roadMines[tankPosition]) { // вн.условие 2.1 выполняется до конца цикла while, если на пути нет второй мины
-                console.log(`танк переместился на ${tankPosition + 1}`);
-                ++tankPosition; // продолжаем делать 1 шаг после незаминированного поля
-            } else { // иначе 2.2, если на пути вторая мина, останавливаем цикл while
-                console.log(`танк переместился на ${tankPosition + 1}. Танк уничтожен. Движение прекращено`);
-                break;
-            }
+while (tankPosition < roadMines.length) {
+    console.log(`Танк перемещается на ${tankPosition + 1}...`);
+    if (roadMines[tankPosition] === false) { // Проверка попадания на мину
+        livesCounter--;
+        if (livesCounter > 0) { // Проверка оставшихся жизней после попадания на мину и вычитания 1 жизни
+            console.log(`Танк повреждён! Движение продолжается.`);
+        } else {
+            console.log(`Танк уничтожен. Движение прекращено!`);
+            break; // В случае нуля оставшихся жизней останавливает весь цикл do-if-if
         }
-        break; // Чтобы уничтоженный танк не двигался дальше, останавливаем всё альтернативное условие 2 цикла for. Цикл for завершается полностью.
+    }
+    tankPosition++; // приращение позиции (шаг) танка идет после цикла do-if-if (только в случае успешно завершенного цикла), т.к. первая позиция в массиве имеет индекс 0
+    if (tankPosition === roadMines.length) { // выводится только один раз несмотря на количество итераций цикла
+        console.log(`Ура! Танк успешно достиг конца дороги!`);
     }
 }

@@ -1,11 +1,10 @@
-// Задание 2 - возвращать произвольную строку с перевернутыми в ней в обратном порядке с помощью цикла словами
+// v2 Задание 2 - возвращать произвольную строку с перевернутыми в ней в обратном порядке с помощью цикла словами
 
 let originalString = 'Привет, мир!';
 let reversedSymbolsArray = [];
 
 for (i = 0; i < originalString.length; i++) { // Вовзращаемый тип Undefined при извлечении в массив символа с несуществующим индексом строки превращается в пустую строку '' при объединении массива в новую строку через .join(). Но лучше, чтобы в массиве не было лишних элементов, поэтому в условии for () i не должен равняться длине originalString
-    let letterEjected = originalString[i];
-    reversedSymbolsArray.unshift(letterEjected);
+    reversedSymbolsArray.unshift(originalString[i]);
     // console.log(`Символ ${letterEjected} добавлен во временный массив`);
 }
 // console.log('Временный массив выглядит следущим образом:\n', reversedSymbolsArray);
